@@ -1,9 +1,649 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Bakers Theory</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bakers Theory — Opening Soon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Allura&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --brown-deep:#4A2F1C;
+    --brown-darker:#3A2414;
+    --cream:#FBF3E7;
+    --caramel:#C9812C;
+    --caramel-warm:#D8A06A;
+    --blush:#F2C9A0;
+    --ink:#2B1B10;
+    --line: rgba(74,47,28,0.14);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'DM Sans', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.display{
+    font-family:'Fredoka', sans-serif;
+    font-weight:600;
+    color:var(--brown-deep);
+    margin:0;
+  }
+  a{color:inherit;}
+  .wrap{max-width:960px;margin:0 auto;padding:0 28px;}
+
+  /* Scallop divider — echoes the logo's crown-like letterforms */
+  .scallop{
+    display:block;
+    width:100%;
+    height:22px;
+    line-height:0;
+  }
+  .scallop svg{display:block;width:100%;height:100%;}
+
+  /* HERO */
+  .hero{
+    background:var(--brown-deep);
+    color:var(--cream);
+    text-align:center;
+    padding:104px 24px 64px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+      radial-gradient(circle at 50% 16%, rgba(255,255,255,0.075), transparent 46%),
+      radial-gradient(circle at 12% 88%, rgba(255,255,255,0.04), transparent 42%),
+      radial-gradient(circle at 90% 80%, rgba(255,255,255,0.04), transparent 42%),
+      radial-gradient(ellipse at 50% 45%, transparent 52%, rgba(0,0,0,0.38) 100%);
+    pointer-events:none;
+  }
+  /* subtle grain so the brown field doesn't read flat */
+  .hero::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    opacity:0.035;
+    mix-blend-mode:overlay;
+    pointer-events:none;
+  }
+
+  /* SMS Login button */
+  .sms-login-btn{
+    position:absolute;
+    top:24px;
+    right:24px;
+    z-index:5;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    line-height:1.15;
+    text-decoration:none;
+    font-family:'Fredoka', sans-serif;
+    color:var(--cream);
+    background:rgba(255,255,255,0.06);
+    border:1.25px solid rgba(242,201,160,0.4);
+    border-radius:999px;
+    padding:9px 18px;
+    cursor:pointer;
+    transition:background .2s ease, border-color .2s ease, transform .2s ease;
+  }
+  .sms-login-btn:hover,
+  .sms-login-btn:focus-visible{
+    background:rgba(255,255,255,0.12);
+    border-color:var(--caramel);
+    transform:translateY(-2px);
+  }
+  .sms-login-btn:focus-visible{
+    outline:2px solid var(--caramel);
+    outline-offset:2px;
+  }
+  .sms-login-btn .sms-main{
+    font-size:14px;
+    font-weight:700;
+    letter-spacing:.04em;
+  }
+  .sms-login-btn .sms-sub{
+    font-size:9.5px;
+    font-weight:500;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--blush);
+    margin-top:1px;
+  }
+  @media (max-width:480px){
+    .sms-login-btn{
+      top:16px;
+      right:16px;
+      padding:7px 14px;
+    }
+    .sms-login-btn .sms-main{font-size:12px;}
+    .sms-login-btn .sms-sub{font-size:8px;}
+  }
+
+  @keyframes fadeSlideUp{
+    from{opacity:0; transform:translateY(16px);}
+    to{opacity:1; transform:translateY(0);}
+  }
+
+  .hero-announce{
+    position:relative;
+    margin-bottom:80px;
+  }
+
+  /* Line 1 — script announcement */
+  .script-line{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:14px;
+    margin:0 0 20px;
+    line-height:1;
+    font-family:'Allura', cursive;
+    font-weight:400;
+    font-size:clamp(30px, 6.4vw, 44px);
+    color:var(--caramel-warm);
+    opacity:0;
+    animation:fadeSlideUp 650ms ease-out 0ms both;
+  }
+  .flourish{
+    display:inline-block;
+    width:34px;
+    height:14px;
+    flex:0 0 auto;
+    opacity:0.75;
+  }
+  .flourish svg{display:block;width:100%;height:100%;}
+  .flourish-right{transform:scaleX(-1);}
+
+  /* Line 2 — pill */
+  .pill-wrap{
+    display:flex;
+    justify-content:center;
+    margin:0 0 14px;
+    opacity:0;
+    animation:fadeSlideUp 650ms ease-out 200ms both;
+  }
+  .pill{
+    display:inline-flex;
+    align-items:center;
+    white-space:nowrap;
+    font-family:'Fredoka', sans-serif;
+    font-weight:600;
+    letter-spacing:0.2em;
+    text-transform:uppercase;
+    font-size:clamp(10.5px, 2.9vw, 13.5px);
+    color:var(--cream);
+    background:transparent;
+    border:1.25px solid rgba(201,129,44,0.55);
+    border-radius:999px;
+    padding:11px clamp(16px, 4vw, 26px);
+  }
+  .pill .bullet{
+    color:var(--caramel);
+    margin:0 10px;
+    font-size:0.8em;
+  }
+
+  /* Line 3 — right now */
+  .right-now{
+    position:relative;
+    display:inline-block;
+    margin:0;
+    font-family:'Fredoka', sans-serif;
+    font-weight:600;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    font-size:clamp(12.5px, 2.6vw, 15px);
+    color:rgba(251,243,231,0.72);
+    opacity:0;
+    animation:fadeSlideUp 650ms ease-out 350ms both;
+  }
+  .right-now .swoosh{
+    position:absolute;
+    left:50%;
+    top:100%;
+    transform:translateX(-50%);
+    width:74px;
+    height:14px;
+    margin-top:6px;
+    opacity:0.6;
+  }
+  .right-now .swoosh svg{display:block;width:100%;height:100%;}
+
+  .logo-img{
+    width:min(560px, 86vw);
+    height:auto;
+    margin:0 auto 18px;
+    display:block;
+    overflow:visible;
+    color:var(--cream);
+    opacity:0;
+    animation:fadeSlideUp 650ms ease-out 500ms both;
+  }
+  @media (max-width:480px){
+    .hero{padding:80px 20px 56px;}
+    .hero-announce{margin-bottom:64px;}
+    .flourish{width:26px;}
+    .pill{padding:10px clamp(14px, 5vw, 18px);}
+  }
+  .hero p.lede{
+    max-width:520px;
+    margin:18px auto 0;
+    font-size:17px;
+    line-height:1.7;
+    color:rgba(251,243,231,0.86);
+  }
+  .oven-line{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    margin-top:34px;
+    font-family:'Fredoka', sans-serif;
+    font-size:15px;
+    color:var(--blush);
+  }
+  .oven-line .dot{
+    width:6px;height:6px;border-radius:50%;
+    background:var(--caramel);
+    animation:pulse 1.6s ease-in-out infinite;
+  }
+  .oven-line .dot:nth-child(4){animation-delay:.2s;}
+  .oven-line .dot:nth-child(5){animation-delay:.4s;}
+  @keyframes pulse{
+    0%,100%{opacity:.35;}
+    50%{opacity:1;}
+  }
+
+  /* NOTIFY */
+  .notify{
+    padding:56px 24px 60px;
+    text-align:center;
+  }
+  .notify h2{font-size:26px;margin-bottom:10px;}
+  .notify p{
+    max-width:460px;margin:0 auto 26px;
+    color:#5b4534; line-height:1.6; font-size:15.5px;
+  }
+  form.signup{
+    display:flex;
+    max-width:420px;
+    margin:0 auto;
+    gap:10px;
+    flex-wrap:wrap;
+    justify-content:center;
+  }
+  form.signup input[type="email"]{
+    flex:1 1 220px;
+    padding:14px 18px;
+    border-radius:999px;
+    border:1.5px solid var(--line);
+    background:#fff;
+    font-family:'DM Sans', sans-serif;
+    font-size:15px;
+    color:var(--ink);
+    outline:none;
+    transition:border-color .2s;
+  }
+  form.signup input[type="email"]:focus{border-color:var(--caramel);}
+  form.signup button{
+    flex:0 0 auto;
+    padding:14px 26px;
+    border-radius:999px;
+    border:none;
+    background:var(--brown-deep);
+    color:var(--cream);
+    font-family:'Fredoka', sans-serif;
+    font-weight:600;
+    font-size:15px;
+    cursor:pointer;
+    transition:background .2s, transform .15s;
+  }
+  form.signup button:hover{background:var(--brown-darker); transform:translateY(-1px);}
+  form.signup button:focus-visible, form.signup input:focus-visible{
+    outline:3px solid var(--caramel);
+    outline-offset:2px;
+  }
+  .form-note{
+    font-size:12.5px;
+    color:#8a7360;
+    margin-top:12px;
+  }
+  .confirm-msg{
+    display:none;
+    max-width:420px;
+    margin:14px auto 0;
+    background:var(--blush);
+    color:var(--brown-darker);
+    padding:12px 18px;
+    border-radius:14px;
+    font-size:14.5px;
+    font-family:'Fredoka', sans-serif;
+  }
+  .confirm-msg.show{display:block;}
+
+  /* WHAT TO EXPECT + CONTACT */
+  .details{
+    background:var(--brown-deep);
+    border-top:1px solid rgba(251,243,231,0.08);
+    border-bottom:1px solid rgba(251,243,231,0.08);
+    padding:80px 24px 88px;
+    position:relative;
+    overflow:hidden;
+  }
+  .details::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:radial-gradient(circle at 50% 0%, rgba(255,255,255,0.06), transparent 55%);
+    pointer-events:none;
+  }
+  .expect-inner{
+    max-width:760px;
+    margin:0 auto;
+    text-align:center;
+    position:relative;
+    opacity:0;
+    transform:translateY(24px);
+    transition:opacity .7s ease-out, transform .7s ease-out;
+  }
+  .details.in-view .expect-inner{
+    opacity:1;
+    transform:translateY(0);
+  }
+  .expect-eyebrow{
+    font-family:'Fredoka', sans-serif;
+    font-size:12px;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+    color:var(--blush);
+    opacity:.75;
+    margin:0 0 14px;
+  }
+  .expect-heading{
+    font-family:'Fredoka', sans-serif;
+    font-weight:600;
+    font-size:clamp(26px, 4vw, 34px);
+    color:var(--cream);
+    margin:0 0 48px;
+    letter-spacing:.01em;
+  }
+  .expect-grid{
+    list-style:none;
+    margin:0 auto 56px;
+    padding:0;
+    display:grid;
+    grid-template-columns:repeat(2, minmax(0,1fr));
+    gap:34px 56px;
+    max-width:560px;
+  }
+  .expect-grid li{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    font-family:'DM Sans', sans-serif;
+    font-size:16.5px;
+    color:rgba(251,243,231,0.92);
+    text-align:left;
+  }
+  .expect-icon{
+    font-size:19px;
+    line-height:1;
+    flex:0 0 auto;
+    width:38px;
+    height:38px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:50%;
+    background:rgba(255,255,255,0.06);
+    border:1px solid rgba(242,201,160,0.25);
+  }
+  .expect-divider{
+    width:64px;
+    height:1px;
+    margin:0 auto 40px;
+    background:linear-gradient(90deg, transparent, var(--caramel), transparent);
+    opacity:.6;
+  }
+  .expect-contact{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:10px;
+  }
+  .expect-contact-label{
+    font-family:'Fredoka', sans-serif;
+    font-size:11.5px;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+    color:rgba(251,243,231,0.55);
+  }
+  .expect-email{
+    font-family:'Fredoka', sans-serif;
+    font-weight:600;
+    font-size:clamp(17px, 2.6vw, 20px);
+    color:var(--cream);
+    text-decoration:none;
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    padding-bottom:3px;
+    border-bottom:1px solid rgba(242,201,160,0.35);
+    transition:color .2s ease, border-color .2s ease, transform .2s ease;
+  }
+  .expect-email:hover,
+  .expect-email:focus-visible{
+    color:var(--caramel-warm);
+    border-color:var(--caramel);
+    transform:translateY(-1px);
+  }
+  .expect-email:focus-visible{
+    outline:2px solid var(--caramel);
+    outline-offset:5px;
+    border-radius:4px;
+  }
+  @media (max-width:640px){
+    .details{padding:64px 20px 72px;}
+    .expect-heading{margin-bottom:40px;}
+    .expect-grid{grid-template-columns:1fr; gap:26px; max-width:280px;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .expect-inner{opacity:1; transform:none; transition:none;}
+  }
+
+  /* TERMS */
+  .terms{
+    padding:60px 24px 40px;
+  }
+  .terms .inner{max-width:720px;margin:0 auto;}
+  .terms h2{font-size:24px;margin-bottom:6px;}
+  .terms .updated{
+    font-size:13px;color:#8a7360;margin-bottom:30px;
+  }
+  .terms h3{
+    font-family:'Fredoka', sans-serif;
+    font-size:16px;
+    color:var(--brown-deep);
+    margin:26px 0 8px;
+  }
+  .terms p, .terms li{
+    font-size:14.5px;
+    line-height:1.75;
+    color:#4a3a2c;
+  }
+  .terms ul{padding-left:20px; margin:8px 0;}
+  .terms ol{padding-left:20px; margin:8px 0;}
+  .terms li{margin-bottom:4px;}
+
+  footer{
+    background:var(--brown-deep);
+    color:rgba(251,243,231,0.7);
+    text-align:center;
+    padding:30px 24px;
+    font-size:13px;
+  }
+  footer strong{color:var(--cream); font-family:'Fredoka', sans-serif;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition:none !important;}
+    .script-line, .pill-wrap, .right-now, .logo-img{opacity:1 !important; transform:none !important;}
+  }
+</style>
 </head>
 <body>
-  <h1 style="font-size: 80px; text-align: center;">Bakers Theory</h1>
+
+<section class="hero">
+  <a href="#" class="sms-login-btn" onclick="alert('SMS Login feature coming soon!'); return false;">
+    <span class="sms-main">SMS</span>
+    <span class="sms-sub">Login</span>
+  </a>
+  <div class="wrap">
+    <div class="hero-announce">
+      <p class="script-line">
+        <span class="flourish flourish-left" aria-hidden="true"><svg viewBox="0 0 40 16" xmlns="http://www.w3.org/2000/svg"><path d="M2,8 C10,2 14,14 22,8 C28,4 32,10 38,6" stroke="#D8A06A" stroke-width="1.4" fill="none" stroke-linecap="round"/></svg></span>
+        Good things take time,
+        <span class="flourish flourish-right" aria-hidden="true"><svg viewBox="0 0 40 16" xmlns="http://www.w3.org/2000/svg"><path d="M2,8 C10,2 14,14 22,8 C28,4 32,10 38,6" stroke="#D8A06A" stroke-width="1.4" fill="none" stroke-linecap="round"/></svg></span>
+      </p>
+      <div class="pill-wrap">
+        <span class="pill"><span class="bullet">&bull;</span>SOMETHING SWEET IS BAKING<span class="bullet">&bull;</span></span>
+      </div>
+      <p class="right-now">
+        Right now.
+        <span class="swoosh" aria-hidden="true"><svg viewBox="0 0 74 14" xmlns="http://www.w3.org/2000/svg"><path d="M2,8 C15,14 25,2 37,7 C47,12 57,3 72,8" stroke="#C9812C" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg></span>
+      </p>
+    </div>
+    <svg class="logo-img" viewBox="0 0 2000 2000" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bakers Theory — Est. 2026"><path d="M964,1257 L963,1262 L968,1264 L970,1262 L970,1258 Z M1049,1233 L1045,1236 L1044,1240 L1048,1241 L1053,1237 L1057,1240 L1057,1246 L1042,1259 L1042,1263 L1061,1264 L1062,1260 L1052,1257 L1060,1250 L1062,1246 L1062,1240 L1058,1234 Z M996,1233 L992,1236 L991,1240 L995,1241 L1000,1237 L1004,1240 L1004,1246 L989,1259 L989,1263 L1008,1264 L1009,1260 L999,1257 L1007,1250 L1009,1246 L1009,1240 L1005,1234 Z M897,1232 L891,1236 L891,1262 L903,1264 L905,1260 L896,1257 L896,1251 L902,1249 L901,1245 L896,1244 L896,1239 L898,1237 L904,1237 L905,1233 Z M1028,1231 L1021,1233 L1017,1237 L1014,1244 L1015,1258 L1022,1264 L1029,1263 L1034,1258 L1037,1251 L1036,1237 L1032,1232 Z M1029,1236 L1032,1240 L1032,1251 L1030,1255 L1024,1259 L1019,1254 L1019,1244 L1026,1236 Z M932,1231 L925,1230 L915,1235 L915,1246 L925,1250 L927,1252 L927,1256 L920,1260 L914,1258 L912,1254 L909,1254 L908,1258 L911,1262 L920,1265 L930,1262 L932,1258 L932,1250 L928,1245 L921,1244 L919,1239 L924,1235 L932,1236 L934,1233 Z M1082,1228 L1075,1232 L1068,1244 L1068,1256 L1074,1264 L1079,1264 L1084,1261 L1087,1255 L1086,1247 L1082,1243 L1075,1241 L1082,1233 Z M1076,1247 L1079,1247 L1082,1250 L1082,1255 L1078,1259 L1076,1259 L1072,1253 L1072,1250 Z M947,1228 L943,1235 L938,1235 L936,1238 L938,1240 L943,1239 L945,1241 L945,1261 L947,1264 L949,1264 L950,1240 L952,1238 L958,1238 L960,1235 L958,1233 L951,1234 L950,1229 Z M1262,1013 L1262,1090 L1266,1105 L1270,1112 L1279,1120 L1293,1125 L1316,1125 L1328,1122 L1342,1114 L1343,1115 L1339,1128 L1333,1134 L1323,1138 L1295,1136 L1267,1127 L1267,1178 L1289,1184 L1309,1187 L1346,1187 L1365,1182 L1392,1165 L1399,1158 L1406,1146 L1411,1124 L1412,1013 L1347,1013 L1348,1080 L1342,1086 L1334,1086 L1329,1081 L1328,1013 Z M678,968 L672,1159 L743,1159 L742,1091 L749,1084 L757,1085 L762,1091 L763,1159 L831,1159 L832,1090 L838,1119 L849,1138 L866,1151 L888,1158 L932,1158 L947,1154 L963,1145 L963,1106 L932,1113 L911,1113 L900,1108 L897,1103 L898,1099 L978,1099 L979,1094 L983,1114 L992,1134 L1007,1149 L1027,1158 L1043,1161 L1067,1161 L1083,1158 L1101,1150 L1107,1146 L1122,1129 L1132,1103 L1131,1159 L1198,1159 L1198,1089 L1202,1085 L1206,1084 L1251,1089 L1257,1013 L1240,1010 L1224,1012 L1207,1020 L1195,1032 L1187,1046 L1184,1014 L1135,1014 L1133,1074 L1127,1052 L1115,1033 L1107,1037 L1098,1038 L1089,1035 L1079,1024 L1069,1034 L1059,1038 L1053,1038 L1043,1034 L1034,1024 L1026,1033 L1014,1038 L1005,1037 L996,1032 L991,1038 L983,1056 L980,1070 L979,1087 L977,1064 L973,1048 L964,1031 L956,1023 L942,1015 L928,1011 L889,1011 L879,1013 L862,1020 L846,1034 L838,1048 L835,1057 L832,1077 L830,1053 L826,1037 L821,1027 L811,1017 L796,1011 L772,1011 L753,1019 L740,1032 L738,1017 L737,968 Z M1048,1086 L1061,1085 L1069,1091 L1071,1095 L1071,1102 L1069,1107 L1064,1112 L1051,1113 L1044,1108 L1042,1104 L1042,1094 Z M897,1078 L899,1074 L905,1069 L914,1069 L921,1075 L923,1082 L898,1083 Z M645,965 L576,970 L576,1012 L562,1013 L562,1076 L576,1082 L576,1120 L580,1136 L584,1143 L592,1151 L599,1155 L613,1159 L642,1159 L656,1157 L668,1153 L668,1103 L645,1103 L641,1099 L642,1081 L668,1081 L668,1013 L643,1012 Z M1052,765 L1039,780 L1035,788 L1030,807 L1029,822 L1032,850 L1035,860 L1044,876 L1060,890 L1068,894 L1087,899 L1127,899 L1143,895 L1159,887 L1159,846 L1138,852 L1112,854 L1099,850 L1095,846 L1094,841 L1175,840 L1175,815 L1173,800 L1168,784 L1161,772 L1146,759 L1121,751 L1100,750 L1082,752 L1068,756 Z M1094,818 L1101,810 L1109,809 L1117,814 L1120,823 L1095,824 Z M1429,760 L1387,750 L1360,749 L1344,751 L1326,757 L1313,766 L1303,782 L1301,791 L1300,782 L1303,756 L1301,753 L1279,751 L1265,754 L1251,762 L1242,771 L1233,786 L1231,780 L1230,755 L1181,755 L1177,900 L1243,900 L1242,833 L1244,829 L1250,825 L1297,829 L1300,794 L1304,816 L1308,823 L1315,830 L1333,838 L1352,841 L1355,844 L1352,848 L1339,848 L1320,845 L1304,840 L1304,890 L1331,898 L1349,901 L1382,901 L1399,898 L1410,894 L1425,882 L1430,873 L1432,865 L1432,849 L1430,841 L1424,831 L1420,828 L1406,822 L1381,818 L1379,814 L1382,811 L1393,811 L1414,814 L1429,819 Z M888,709 L882,900 L953,900 L951,850 L953,848 L960,848 L962,850 L973,900 L1037,900 L1016,811 L1040,754 L977,754 L956,808 L951,808 L947,709 Z M569,709 L567,786 L569,900 L618,900 L620,881 L633,893 L651,900 L672,899 L689,894 L700,887 L711,874 L718,858 L722,833 L724,837 L727,859 L733,873 L746,888 L758,895 L772,899 L794,900 L810,894 L825,881 L827,900 L876,900 L878,808 L874,791 L867,778 L859,769 L852,776 L840,780 L827,776 L818,766 L816,766 L809,775 L801,779 L786,778 L780,774 L774,766 L772,766 L763,776 L756,779 L745,779 L739,776 L728,794 L722,818 L720,800 L715,782 L705,766 L699,761 L680,752 L659,750 L641,753 L625,762 L623,709 Z M792,825 L802,825 L806,827 L811,833 L811,844 L804,852 L793,853 L789,851 L784,845 L784,833 Z M640,826 L653,825 L660,831 L662,840 L660,847 L652,853 L644,853 L635,847 L633,836 L635,831 Z" fill="currentColor"/></svg>
+    <p class="lede">A neighborhood bakery built on one idea: the best loaf is the one made from scratch, every single morning. We're proofing the dough, seasoning the ovens, and counting down the days.</p>
+    <div class="oven-line" aria-hidden="true">
+      <span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
+    </div>
+  </div>
+</section>
+
+<div class="scallop" aria-hidden="true">
+  <svg viewBox="0 0 400 20" preserveAspectRatio="none">
+    <path d="M0,0 Q10,20 20,0 Q30,20 40,0 Q50,20 60,0 Q70,20 80,0 Q90,20 100,0 Q110,20 120,0 Q130,20 140,0 Q150,20 160,0 Q170,20 180,0 Q190,20 200,0 Q210,20 220,0 Q230,20 240,0 Q250,20 260,0 Q270,20 280,0 Q290,20 300,0 Q310,20 320,0 Q330,20 340,0 Q350,20 360,0 Q370,20 380,0 Q390,20 400,0 L400,0 L0,0 Z" fill="var(--brown-deep)"/>
+  </svg>
+</div>
+
+<section class="notify">
+  <div class="wrap">
+    <h2>Be first through the door</h2>
+    <p>Leave your email and we'll let you know the moment the ovens turn on — plus first dibs on opening-week treats.</p>
+    <form class="signup" id="signupForm">
+      <label for="email" class="visually-hidden" style="position:absolute;left:-9999px;">Email address</label>
+      <input type="email" id="email" name="email" placeholder="you@email.com" required />
+      <button type="submit">Notify me</button>
+    </form>
+    <p class="confirm-msg" id="confirmMsg">You're on the list! We'll be in touch before the first batch comes out.</p>
+    <p class="form-note">No spam — just one email, on opening day.</p>
+  </div>
+</section>
+
+<section class="details">
+  <div class="expect-inner">
+    <p class="expect-eyebrow">Opening — Coming soon, 2026</p>
+    <h2 class="expect-heading">What to Expect</h2>
+    <ul class="expect-grid">
+      <li><span class="expect-icon" aria-hidden="true">🍰</span>Cakes</li>
+      <li><span class="expect-icon" aria-hidden="true">🥐</span>Pastries</li>
+      <li><span class="expect-icon" aria-hidden="true">🧁</span>Cupcakes</li>
+      <li><span class="expect-icon" aria-hidden="true">🍫</span>Brownies</li>
+      <li><span class="expect-icon" aria-hidden="true">🍮</span>Tiramisu</li>
+      <li><span class="expect-icon" aria-hidden="true">✨</span>Custom Creations</li>
+    </ul>
+    <div class="expect-divider" aria-hidden="true"></div>
+    <div class="expect-contact">
+      <span class="expect-contact-label">Say hello</span>
+      <a class="expect-email" href="mailto:bakerstheory.in@gmail.com">
+        <span aria-hidden="true">📧</span>bakerstheory.in@gmail.com
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="terms" id="terms">
+  <div class="inner">
+    <h2>Terms &amp; Conditions</h2>
+    <p class="updated">Last updated: July 2026</p>
+
+    <p>Welcome to Bakers Theory. These terms apply to this website and to any pre-opening communications, waitlist sign-ups, and future orders placed with us. By using this site or joining our list, you agree to the terms below.</p>
+
+    <h3>1. About this site</h3>
+    <p>Bakers Theory is currently in pre-opening. Information on this page — including opening dates, menu items, and pricing — is provisional and may change without notice as we finalize our kitchen and storefront.</p>
+
+    <h3>2. Joining the waitlist</h3>
+    <ul>
+      <li>Submitting your email signs you up to receive updates about our opening and early offers.</li>
+      <li>You can unsubscribe at any time using the link in any email we send.</li>
+      <li>We will never sell your email address to a third party.</li>
+    </ul>
+
+    <h3>3. Orders &amp; payments (once open)</h3>
+    <p>Once trading begins, all orders are subject to product availability. Prices are shown in local currency and include applicable taxes unless stated otherwise. We reserve the right to correct pricing errors and to limit order quantities.</p>
+
+    <h3>4. Allergens</h3>
+    <p>Our kitchen handles wheat, gluten, dairy, eggs, tree nuts, and soy. While we take care with labeling, we cannot guarantee any product is entirely free of a given allergen. Please tell our staff about any allergy before ordering.</p>
+
+    <h3>5. Cancellations &amp; refunds</h3>
+    <p>Custom or pre-ordered items may be cancelled up to 48 hours before collection for a full refund. Baked goods are perishable, so refunds after collection are handled case-by-case and require photo evidence of any issue.</p>
+
+    <h3>6. Intellectual property</h3>
+    <p>The Bakers Theory name, logo, and site content belong to Bakers Theory. Please don't reproduce or reuse them without written permission.</p>
+
+    <h3>7. Limitation of liability</h3>
+    <p>We aim for accuracy in everything published here, but this site is provided "as is" during our pre-opening period. Bakers Theory is not liable for any loss arising from reliance on provisional information such as dates or menu details.</p>
+
+    <h3>8. Changes to these terms</h3>
+    <p>We may update these terms as we get closer to opening and once we begin trading. The date at the top of this page reflects the latest revision.</p>
+
+    <h3>9. Contact</h3>
+    <p>Questions about these terms can be sent to <a href="mailto:hello@bakerstheory.com">hello@bakerstheory.com</a>.</p>
+  </div>
+</section>
+
+<footer>
+  <strong>Bakers Theory</strong><br/>
+  Est. 2026 · Opening soon · <a href="#terms">Terms &amp; Conditions</a>
+</footer>
+
+<script>
+  document.getElementById('signupForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    const msg = document.getElementById('confirmMsg');
+    msg.classList.add('show');
+    this.reset();
+  });
+
+  (function(){
+    var detailsSection = document.querySelector('.details');
+    if(!detailsSection) return;
+    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(reduceMotion || !('IntersectionObserver' in window)){
+      detailsSection.classList.add('in-view');
+      return;
+    }
+    var observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          detailsSection.classList.add('in-view');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {threshold:0.2});
+    observer.observe(detailsSection);
+  })();
+</script>
+
 </body>
 </html>
