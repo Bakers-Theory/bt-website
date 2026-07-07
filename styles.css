@@ -12,6 +12,9 @@
   html{scroll-behavior:smooth;}
   body{
     margin:0;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
     background:var(--cream);
     color:var(--ink);
     font-family:'DM Sans', sans-serif;
@@ -440,6 +443,7 @@
   a.contact-value:hover, a.contact-value:focus-visible{color:var(--caramel);}
 
   footer{
+    margin-top:auto;
     background:var(--brown-deep);
     color:rgba(251,243,231,0.7);
     text-align:center;
