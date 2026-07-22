@@ -4,6 +4,206 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>Infinite Premium Loading Bar</title>
+
+<style>
+/* ===========================
+   GLOBAL
+=========================== */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html,
+body{
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    background:#050505;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-family:Inter,Segoe UI,Arial,sans-serif;
+}
+
+/* ===========================
+   CONTAINER
+=========================== */
+
+.loader-container{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:0 24px;
+}
+
+/* ===========================
+   LOADING TRACK
+=========================== */
+
+.loading-track{
+
+    width:clamp(260px,45vw,720px);
+
+    height:clamp(4px,0.55vw,8px);
+
+    border-radius:999px;
+
+    position:relative;
+
+    overflow:hidden;
+
+    background:rgba(255,255,255,0.08);
+
+    backdrop-filter:blur(20px);
+
+    box-shadow:
+    inset 0 0 8px rgba(255,255,255,.05),
+    0 0 30px rgba(255,255,255,.03);
+
+}
+
+/* ===========================
+   MOVING BAR
+=========================== */
+
+.loading-bar{
+
+    position:absolute;
+
+    left:0;
+    top:0;
+
+    width:30%;
+
+    height:100%;
+
+    border-radius:999px;
+
+    background:
+    linear-gradient(
+    90deg,
+    rgba(255,255,255,0),
+    #ffffff,
+    #d4af37,
+    #8bd3ff,
+    rgba(255,255,255,0)
+    );
+
+    filter:blur(.15px);
+
+    box-shadow:
+
+    0 0 8px rgba(255,255,255,.8),
+    0 0 20px rgba(212,175,55,.45),
+    0 0 40px rgba(139,211,255,.35);
+
+    animation:slide 1.7s linear infinite;
+}
+
+/* ===========================
+   AMBIENT GLOW
+=========================== */
+
+.loading-track::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+
+    linear-gradient(
+    90deg,
+    transparent,
+    rgba(255,255,255,.04),
+    transparent
+    );
+
+    animation:ambient 4s linear infinite;
+}
+
+/* ===========================
+   ANIMATION
+=========================== */
+
+@keyframes slide{
+
+    from{
+        transform:translateX(-160%);
+    }
+
+    to{
+        transform:translateX(460%);
+    }
+
+}
+
+@keyframes ambient{
+
+    from{
+        transform:translateX(-100%);
+    }
+
+    to{
+        transform:translateX(100%);
+    }
+
+}
+
+/* ===========================
+   RESPONSIVE
+=========================== */
+
+@media (max-width:768px){
+
+.loading-track{
+
+    width:85vw;
+
+}
+
+}
+
+@media (min-width:2000px){
+
+.loading-track{
+
+    width:800px;
+
+}
+
+}
+</style>
+</head>
+
+<body>
+
+<div class="loader-container">
+
+    <div class="loading-track">
+
+        <div class="loading-bar"></div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
+
+-------------------------------------------------------------------------------------------
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>3D Login</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -446,8 +646,8 @@ window.location.href="https://app.bakerstheory.in/login";
 </script>
 
 </body>
-</html>
-
+</html> -->
+//-----------------------------------------------------------------------------------------
 <!-- <!DOCTYPE html>
 <html lang="en">
 <head>
