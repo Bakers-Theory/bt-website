@@ -1,12 +1,450 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello World</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>3D Login</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+overflow:hidden;
+background:linear-gradient(-45deg,#071021,#141d38,#2f2158,#111827);
+background-size:400% 400%;
+animation:bgMove 15s infinite;
+perspective:1800px;
+}
+
+@keyframes bgMove{
+
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
+
+}
+
+/* Floating Lights */
+
+.light{
+position:absolute;
+border-radius:50%;
+filter:blur(90px);
+opacity:.55;
+animation:float 10s infinite ease-in-out;
+}
+
+.l1{
+width:320px;
+height:320px;
+background:#00d9ff;
+top:-120px;
+left:-120px;
+}
+
+.l2{
+width:320px;
+height:320px;
+background:#8b5cf6;
+bottom:-120px;
+right:-120px;
+animation-delay:4s;
+}
+
+@keyframes float{
+
+50%{
+transform:translateY(-40px) translateX(35px);
+}
+
+}
+
+/* Login Card */
+
+.card{
+
+width:420px;
+padding:45px;
+border-radius:28px;
+
+background:rgba(255,255,255,.08);
+
+backdrop-filter:blur(20px);
+
+border:1px solid rgba(255,255,255,.15);
+
+box-shadow:
+0 25px 70px rgba(0,0,0,.45),
+inset 0 0 40px rgba(255,255,255,.04);
+
+transform-style:preserve-3d;
+
+transition:.15s;
+
+position:relative;
+
+}
+
+.logo{
+
+width:90px;
+height:90px;
+
+margin:auto;
+margin-bottom:25px;
+
+border-radius:50%;
+
+background:linear-gradient(135deg,#00d9ff,#8b5cf6);
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+font-size:38px;
+font-weight:bold;
+color:white;
+
+transform:translateZ(60px);
+
+}
+
+h1{
+
+text-align:center;
+color:white;
+margin-bottom:8px;
+
+transform:translateZ(50px);
+
+}
+
+.subtitle{
+
+text-align:center;
+color:#d8d8d8;
+margin-bottom:35px;
+
+transform:translateZ(40px);
+
+}
+
+.inputBox{
+
+position:relative;
+margin-bottom:22px;
+
+transform:translateZ(45px);
+
+}
+
+.inputBox input{
+
+width:100%;
+padding:16px 20px;
+
+border:none;
+outline:none;
+
+border-radius:14px;
+
+background:rgba(255,255,255,.12);
+
+color:white;
+
+font-size:15px;
+
+transition:.3s;
+
+}
+
+.inputBox input::placeholder{
+
+color:#d8d8d8;
+
+}
+
+.inputBox input:focus{
+
+background:rgba(255,255,255,.18);
+
+box-shadow:0 0 18px rgba(0,217,255,.6);
+
+}
+
+#toggle{
+
+position:absolute;
+
+right:18px;
+
+top:16px;
+
+cursor:pointer;
+
+color:white;
+
+}
+
+.options{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+margin-bottom:25px;
+
+color:white;
+
+font-size:14px;
+
+transform:translateZ(35px);
+
+}
+
+.options a{
+
+color:#00d9ff;
+text-decoration:none;
+
+}
+
+button{
+
+width:100%;
+
+padding:16px;
+
+border:none;
+
+border-radius:15px;
+
+font-size:16px;
+
+font-weight:600;
+
+cursor:pointer;
+
+background:linear-gradient(135deg,#00d9ff,#8b5cf6);
+
+color:white;
+
+transition:.35s;
+
+transform:translateZ(55px);
+
+}
+
+button:hover{
+
+transform:translateZ(55px) scale(1.05);
+
+box-shadow:0 0 25px #00d9ff;
+
+}
+
+.footer{
+
+margin-top:30px;
+
+text-align:center;
+
+color:#d8d8d8;
+
+transform:translateZ(25px);
+
+}
+
+.footer a{
+
+color:#00d9ff;
+text-decoration:none;
+
+}
+
+/* Responsive */
+
+@media(max-width:768px){
+
+.card{
+
+width:92%;
+padding:35px 25px;
+
+}
+
+.logo{
+
+width:75px;
+height:75px;
+font-size:30px;
+
+}
+
+}
+
+@media(max-width:480px){
+
+.options{
+
+flex-direction:column;
+align-items:flex-start;
+gap:12px;
+
+}
+
+h1{
+
+font-size:28px;
+
+}
+
+}
+
+</style>
+
 </head>
+
 <body>
-    <h1>Hello, World!</h1>
+
+<div class="light l1"></div>
+<div class="light l2"></div>
+
+<div class="card" id="card">
+
+<div class="logo">BT</div>
+
+<h1>Welcome Back</h1>
+
+<p class="subtitle">Login to Bakers Theory</p>
+
+<form id="loginForm">
+
+<div class="inputBox">
+
+<input type="email"
+id="email"
+placeholder="Email Address"
+required>
+
+</div>
+
+<div class="inputBox">
+
+<input
+type="password"
+id="password"
+placeholder="Password"
+required>
+
+<span id="toggle">👁</span>
+
+</div>
+
+<div class="options">
+
+<label>
+<input type="checkbox">
+ Remember Me
+</label>
+
+<a href="#">Forgot Password?</a>
+
+</div>
+
+<button type="submit">
+
+LOGIN
+
+</button>
+
+</form>
+
+<div class="footer">
+
+Don't have an account?
+
+<a href="#">Register</a>
+
+</div>
+
+</div>
+
+<script>
+
+// 3D Tilt
+
+const card=document.getElementById("card");
+
+if(window.matchMedia("(hover:hover)").matches){
+
+document.addEventListener("mousemove",(e)=>{
+
+const x=(window.innerWidth/2-e.pageX)/18;
+
+const y=(window.innerHeight/2-e.pageY)/18;
+
+card.style.transform=
+`rotateY(${x}deg) rotateX(${-y}deg)`;
+
+});
+
+document.addEventListener("mouseleave",()=>{
+
+card.style.transform="rotateY(0deg) rotateX(0deg)";
+
+});
+
+}
+
+// Password Toggle
+
+const toggle=document.getElementById("toggle");
+const password=document.getElementById("password");
+
+toggle.onclick=()=>{
+
+if(password.type==="password"){
+
+password.type="text";
+toggle.innerHTML="🙈";
+
+}else{
+
+password.type="password";
+toggle.innerHTML="👁";
+
+}
+
+};
+
+// Redirect to your login page
+
+document.getElementById("loginForm").addEventListener("submit",function(e){
+
+e.preventDefault();
+
+window.location.href="https://app.bakerstheory.in/login";
+
+});
+
+</script>
+
 </body>
 </html>
 
