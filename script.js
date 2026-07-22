@@ -1,4 +1,5 @@
   // Fade in the "Specialities" section when it scrolls into view
+
   (function(){
     var detailsSection = document.querySelector('.details');
     if(!detailsSection) return;
