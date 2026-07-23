@@ -1,655 +1,155 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-   
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Under Construction</title>
+    <style>
+        /* Base Variables and Resets */
+        :root {
+            --primary-color: #f39c12; /* Construction Yellow/Orange */
+            --text-color: #d2dae2;
+            --heading-color: #ffffff;
+        }
 
-<title>Infinite Premium Loading Bar</title>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-<style>
-/* ===========================
-   GLOBAL
-=========================== */
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            /* New Gradient Background */
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            padding: 20px;
+        }
 
-html,
-body{
-    width:100%;
-    height:100%;
-    overflow:hidden;
-    background:#050505;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-family:Inter,Segoe UI,Arial,sans-serif;
-}
+        .container {
+            max-width: 600px;
+            /* Updated to a Glassmorphism effect to pop against the new background */
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 50px 40px;
+            border-radius: 12px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
 
-/* ===========================
-   CONTAINER
-=========================== */
+        /* Spinning Gear Icon */
+        .icon-container {
+            margin-bottom: 20px;
+        }
 
-.loader-container{
-    width:100%;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    padding:0 24px;
-}
+        .gear-icon {
+            width: 80px;
+            height: 80px;
+            fill: var(--primary-color);
+            animation: spin 4s linear infinite;
+        }
 
-/* ===========================
-   LOADING TRACK
-=========================== */
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
 
-.loading-track{
+        /* Typography */
+        h1 {
+            color: var(--heading-color);
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
 
-    width:clamp(260px,45vw,720px);
+        p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            color: #d2dae2;
+        }
 
-    height:clamp(4px,0.55vw,8px);
+        /* Animated Progress Bar */
+        .progress-wrapper {
+            width: 100%;
+            text-align: left;
+        }
 
-    border-radius:999px;
+        .progress-bar-container {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
 
-    position:relative;
+        .progress-bar-fill {
+            width: 75%; /* Adjust this percentage as needed */
+            height: 100%;
+            background: var(--primary-color);
+            border-radius: 10px;
+            animation: loadProgress 1.5s ease-out forwards;
+        }
 
-    overflow:hidden;
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: #d2dae2;
+            font-weight: 600;
+        }
 
-    background:rgba(255,255,255,0.08);
+        @keyframes loadProgress {
+            0% { width: 0; }
+        }
 
-    backdrop-filter:blur(20px);
-
-    box-shadow:
-    inset 0 0 8px rgba(255,255,255,.05),
-    0 0 30px rgba(255,255,255,.03);
-
-}
-
-/* ===========================
-   MOVING BAR
-=========================== */
-
-.loading-bar{
-
-    position:absolute;
-
-    left:0;
-    top:0;
-
-    width:30%;
-
-    height:100%;
-
-    border-radius:999px;
-
-    background:
-    linear-gradient(
-    90deg,
-    rgba(255,255,255,0),
-    #ffffff,
-    #d4af37,
-    #8bd3ff,
-    rgba(255,255,255,0)
-    );
-
-    filter:blur(.15px);
-
-    box-shadow:
-
-    0 0 8px rgba(255,255,255,.8),
-    0 0 20px rgba(212,175,55,.45),
-    0 0 40px rgba(139,211,255,.35);
-
-    animation:slide 1.7s linear infinite;
-}
-
-/* ===========================
-   AMBIENT GLOW
-=========================== */
-
-.loading-track::before{
-
-    content:"";
-
-    position:absolute;
-
-    inset:0;
-
-    background:
-
-    linear-gradient(
-    90deg,
-    transparent,
-    rgba(255,255,255,.04),
-    transparent
-    );
-
-    animation:ambient 4s linear infinite;
-}
-
-/* ===========================
-   ANIMATION
-=========================== */
-
-@keyframes slide{
-
-    from{
-        transform:translateX(-160%);
-    }
-
-    to{
-        transform:translateX(460%);
-    }
-
-}
-
-@keyframes ambient{
-
-    from{
-        transform:translateX(-100%);
-    }
-
-    to{
-        transform:translateX(100%);
-    }
-
-}
-
-/* ===========================
-   RESPONSIVE
-=========================== */
-
-@media (max-width:768px){
-
-.loading-track{
-
-    width:85vw;
-
-}
-
-}
-
-@media (min-width:2000px){
-
-.loading-track{
-
-    width:800px;
-
-}
-
-}
-</style>
+        /* Mobile Responsiveness */
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2rem;
+            }
+            .container {
+                padding: 40px 20px;
+            }
+        }
+    </style>
 </head>
-
 <body>
 
-<div class="loader-container">
+    <div class="container">
+        <!-- Animated SVG Gear Icon -->
+        <div class="icon-container">
+            <svg class="gear-icon" viewBox="0 0 24 24">
+                <path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.06-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.73,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.06,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.43-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.49-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"/>
+            </svg>
+        </div>
 
-    <div class="loading-track">
+        <h1>Under Construction</h1>
+        <!-- Updated Text -->
+        <p>We are currently working hard behind the scenes building something amazing. Please check back soon!</p>
 
-        <div class="loading-bar"></div>
-
+        <!-- Progress Indicator -->
+        <div class="progress-wrapper">
+            <div class="progress-bar-container">
+                <!-- Change the width of this element in CSS to adjust progress -->
+                <div class="progress-bar-fill"></div>
+            </div>
+            <div class="progress-text">
+                <span>Development</span>
+                <span>75% Complete</span>
+            </div>
+        </div>
     </div>
-
-</div>
 
 </body>
 </html>
 
--------------------------------------------------------------------------------------------
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>3D Login</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-<style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
-}
-
-body{
-min-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-overflow:hidden;
-background:linear-gradient(-45deg,#071021,#141d38,#2f2158,#111827);
-background-size:400% 400%;
-animation:bgMove 15s infinite;
-perspective:1800px;
-}
-
-@keyframes bgMove{
-
-0%{background-position:0% 50%;}
-50%{background-position:100% 50%;}
-100%{background-position:0% 50%;}
-
-}
-
-/* Floating Lights */
-
-.light{
-position:absolute;
-border-radius:50%;
-filter:blur(90px);
-opacity:.55;
-animation:float 10s infinite ease-in-out;
-}
-
-.l1{
-width:320px;
-height:320px;
-background:#00d9ff;
-top:-120px;
-left:-120px;
-}
-
-.l2{
-width:320px;
-height:320px;
-background:#8b5cf6;
-bottom:-120px;
-right:-120px;
-animation-delay:4s;
-}
-
-@keyframes float{
-
-50%{
-transform:translateY(-40px) translateX(35px);
-}
-
-}
-
-/* Login Card */
-
-.card{
-
-width:420px;
-padding:45px;
-border-radius:28px;
-
-background:rgba(255,255,255,.08);
-
-backdrop-filter:blur(20px);
-
-border:1px solid rgba(255,255,255,.15);
-
-box-shadow:
-0 25px 70px rgba(0,0,0,.45),
-inset 0 0 40px rgba(255,255,255,.04);
-
-transform-style:preserve-3d;
-
-transition:.15s;
-
-position:relative;
-
-}
-
-.logo{
-
-width:90px;
-height:90px;
-
-margin:auto;
-margin-bottom:25px;
-
-border-radius:50%;
-
-background:linear-gradient(135deg,#00d9ff,#8b5cf6);
-
-display:flex;
-justify-content:center;
-align-items:center;
-
-font-size:38px;
-font-weight:bold;
-color:white;
-
-transform:translateZ(60px);
-
-}
-
-h1{
-
-text-align:center;
-color:white;
-margin-bottom:8px;
-
-transform:translateZ(50px);
-
-}
-
-.subtitle{
-
-text-align:center;
-color:#d8d8d8;
-margin-bottom:35px;
-
-transform:translateZ(40px);
-
-}
-
-.inputBox{
-
-position:relative;
-margin-bottom:22px;
-
-transform:translateZ(45px);
-
-}
-
-.inputBox input{
-
-width:100%;
-padding:16px 20px;
-
-border:none;
-outline:none;
-
-border-radius:14px;
-
-background:rgba(255,255,255,.12);
-
-color:white;
-
-font-size:15px;
-
-transition:.3s;
-
-}
-
-.inputBox input::placeholder{
-
-color:#d8d8d8;
-
-}
-
-.inputBox input:focus{
-
-background:rgba(255,255,255,.18);
-
-box-shadow:0 0 18px rgba(0,217,255,.6);
-
-}
-
-#toggle{
-
-position:absolute;
-
-right:18px;
-
-top:16px;
-
-cursor:pointer;
-
-color:white;
-
-}
-
-.options{
-
-display:flex;
-
-justify-content:space-between;
-
-align-items:center;
-
-margin-bottom:25px;
-
-color:white;
-
-font-size:14px;
-
-transform:translateZ(35px);
-
-}
-
-.options a{
-
-color:#00d9ff;
-text-decoration:none;
-
-}
-
-button{
-
-width:100%;
-
-padding:16px;
-
-border:none;
-
-border-radius:15px;
-
-font-size:16px;
-
-font-weight:600;
-
-cursor:pointer;
-
-background:linear-gradient(135deg,#00d9ff,#8b5cf6);
-
-color:white;
-
-transition:.35s;
-
-transform:translateZ(55px);
-
-}
-
-button:hover{
-
-transform:translateZ(55px) scale(1.05);
-
-box-shadow:0 0 25px #00d9ff;
-
-}
-
-.footer{
-
-margin-top:30px;
-
-text-align:center;
-
-color:#d8d8d8;
-
-transform:translateZ(25px);
-
-}
-
-.footer a{
-
-color:#00d9ff;
-text-decoration:none;
-
-}
-
-/* Responsive */
-
-@media(max-width:768px){
-
-.card{
-
-width:92%;
-padding:35px 25px;
-
-}
-
-.logo{
-
-width:75px;
-height:75px;
-font-size:30px;
-
-}
-
-}
-
-@media(max-width:480px){
-
-.options{
-
-flex-direction:column;
-align-items:flex-start;
-gap:12px;
-
-}
-
-h1{
-
-font-size:28px;
-
-}
-
-}
-
-</style>
-
-</head>
-
-<body>
-
-<div class="light l1"></div>
-<div class="light l2"></div>
-
-<div class="card" id="card">
-
-<div class="logo">BT</div>
-
-<h1>Welcome Back</h1>
-
-<p class="subtitle">Login to Bakers Theory</p>
-
-<form id="loginForm">
-
-<div class="inputBox">
-
-<input type="email"
-id="email"
-placeholder="Email Address"
-required>
-
-</div>
-
-<div class="inputBox">
-
-<input
-type="password"
-id="password"
-placeholder="Password"
-required>
-
-<span id="toggle">👁</span>
-
-</div>
-
-<div class="options">
-
-<label>
-<input type="checkbox">
- Remember Me
-</label>
-
-<a href="#">Forgot Password?</a>
-
-</div>
-
-<button type="submit">
-
-LOGIN
-
-</button>
-
-</form>
-
-<div class="footer">
-
-Don't have an account?
-
-<a href="#">Register</a>
-
-</div>
-
-</div>
-
-<script>
-
-// 3D Tilt
-
-const card=document.getElementById("card");
-
-if(window.matchMedia("(hover:hover)").matches){
-
-document.addEventListener("mousemove",(e)=>{
-
-const x=(window.innerWidth/2-e.pageX)/18;
-
-const y=(window.innerHeight/2-e.pageY)/18;
-
-card.style.transform=
-`rotateY(${x}deg) rotateX(${-y}deg)`;
-
-});
-
-document.addEventListener("mouseleave",()=>{
-
-card.style.transform="rotateY(0deg) rotateX(0deg)";
-
-});
-
-}
-
-// Password Toggle
-
-const toggle=document.getElementById("toggle");
-const password=document.getElementById("password");
-
-toggle.onclick=()=>{
-
-if(password.type==="password"){
-
-password.type="text";
-toggle.innerHTML="🙈";
-
-}else{
-
-password.type="password";
-toggle.innerHTML="👁";
-
-}
-
-};
-
-// Redirect to your login page
-
-document.getElementById("loginForm").addEventListener("submit",function(e){
-
-e.preventDefault();
-
-window.location.href="https://app.bakerstheory.in/login";
-
-});
-
-</script>
-
-</body>
-</html> -->
-//-----------------------------------------------------------------------------------------
 <!-- <!DOCTYPE html>
 <html lang="en">
 <head>
