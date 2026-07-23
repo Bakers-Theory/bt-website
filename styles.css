@@ -257,7 +257,7 @@
     pointer-events:none;
   }
   .expect-inner{
-    max-width:760px;
+    max-width:960px;
     margin:0 auto;
     text-align:center;
     position:relative;
@@ -283,48 +283,61 @@
     margin:0 0 48px;
     letter-spacing:.01em;
   }
+
+  /* UPDATED INTERACTIVE GRID LAYOUT */
   .expect-grid{
-    list-style:none;
-    margin:0 auto 56px;
-    padding:0;
-    display:flex;
-    flex-wrap:wrap;
-    justify-content:center;
-    align-items:flex-start;
-    gap:36px 44px;
-    max-width:620px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 28px;
+    list-style: none;
+    margin: 0 auto 56px;
+    padding: 0;
   }
   .expect-grid li{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:flex-start;
-    gap:12px;
-    width:128px;
-    min-height:96px;
-    margin:0;
-    padding:0;
-    font-family:'DM Sans', sans-serif;
-    font-size:16.5px;
-    color:rgba(251,243,231,0.92);
-    text-align:center;
+    background: rgba(255,255,255,0.03); /* Subtle luxury card background */
+    border: 1px solid rgba(242,201,160,0.15);
+    border-radius: 16px;
+    overflow: hidden;
+    text-align: center;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 17px;
+    font-weight: 500;
+    color: rgba(251,243,231,0.92);
+    padding-bottom: 20px;
+    transition: transform 0.4s var(--ease-luxury), box-shadow 0.4s var(--ease-luxury), border-color 0.4s var(--ease-luxury), background 0.4s var(--ease-luxury);
   }
-  .expect-grid-full{width:128px;}
+  .expect-grid li:hover{
+    transform: translateY(-8px);
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.25);
+    border-color: rgba(201,129,44,0.6); /* Caramel border glow on hover */
+    background: rgba(255,255,255,0.06);
+    color: var(--cream);
+  }
   .expect-icon{
-    font-size:19px;
-    line-height:1;
-    flex:0 0 auto;
-    width:38px;
-    height:38px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    border-radius:50%;
-    background:rgba(255,255,255,0.06);
-    border:1px solid rgba(242,201,160,0.25);
-    margin:0;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    position: relative;
+    background: rgba(0,0,0,0.15); /* Deepens the image well area slightly */
+    display: block;
+    margin-bottom: 16px;
+    overflow: hidden;
   }
-  .expect-icon img{width:24px;height:24px;object-fit:contain;display:block;}
+  .expect-icon img{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 32px; /* Adjust this to make the SVGs larger/smaller inside the squares */
+    box-sizing: border-box;
+    object-fit: contain;
+    transition: transform 0.5s var(--ease-luxury);
+  }
+  .expect-grid li:hover .expect-icon img{
+    transform: scale(1.1);
+  }
+
   .expect-divider{
     width:64px;
     height:1px;
@@ -332,19 +345,71 @@
     background:linear-gradient(90deg, transparent, var(--caramel), transparent);
     opacity:.6;
   }
+
   @media (max-width:640px){
     .details{padding:64px 20px 72px;}
     .expect-heading{margin-bottom:40px;}
-    .expect-grid{gap:28px 24px; max-width:300px;}
-    .expect-grid li, .expect-grid-full{width:100px; min-height:88px;}
+    /* On mobile, use a 2-column grid instead of 1 so cards aren't gigantic */
+    .expect-grid{
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 16px;
+    }
+    .expect-grid li { font-size: 15px; padding-bottom: 16px; }
+    .expect-icon img { padding: 24px; }
   }
+
   @media (prefers-reduced-motion: reduce){
     .expect-inner{opacity:1; transform:none; transition:none;}
+    .expect-grid li { transition: none; }
+    .expect-icon img { transition: none; }
   }
 
   /* TERMS */
   .terms{padding:60px 24px 40px;}
   .terms .inner{max-width:720px;margin:0 auto;}
+
+  /* TIMER STYLES */
+  .timer-wrap{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:18px;
+    margin:28px 0 12px;
+    padding:18px 22px;
+    position:relative;
+  }
+  .timer-top{max-width:880px;margin-left:auto;margin-right:auto;}
+  .timer-graphics{
+    position:absolute;
+    inset:auto auto 0 50%;
+    transform:translateX(-50%);
+    width:92%;
+    height:64px;
+    pointer-events:none;
+    z-index:0;
+    background: radial-gradient(closest-side at 10% 20%, rgba(201,129,44,0.06), transparent 20%),
+                radial-gradient(closest-side at 90% 80%, rgba(216,160,106,0.05), transparent 18%);
+    border-radius:14px;
+  }
+  .timer-display{
+    position:relative;
+    z-index:1;
+    display:inline-block;
+    background:linear-gradient(180deg, rgba(74,47,28,0.98), rgba(58,36,20,0.98));
+    color:var(--cream);
+    padding:18px 28px;
+    border-radius:12px;
+    font-family:'Fredoka', sans-serif;
+    font-weight:700;
+    font-size:clamp(28px,6vw,64px);
+    letter-spacing:0.02em;
+    box-shadow:0 8px 20px rgba(58,36,20,0.18), inset 0 -2px 0 rgba(255,255,255,0.02);
+  }
+  @media (max-width:640px){
+    .timer-wrap{padding:12px 14px; margin:20px 0 8px}
+    .timer-display{font-size:clamp(22px,10vw,44px); padding:12px 16px}
+    .timer-graphics{height:44px}
+  }
   .terms h2{font-size:24px;margin-bottom:6px;}
   .terms .updated{font-size:13px;color:#8a7360;margin-bottom:30px;}
   .terms h3{font-family:'Fredoka', sans-serif; font-size:16px; color:var(--brown-deep); margin:26px 0 8px;}
@@ -568,7 +633,7 @@
     transition:color 350ms var(--ease-luxury);
   }
 
-  /* CONTRIBUTIONS GROUPS (already scoped by class name, unchanged) */
+  /* CONTRIBUTIONS GROUPS */
   .contrib-group{margin-top:80px;}
   .contrib-group:first-of-type{margin-top:8px;}
   .contrib-group-title{
@@ -636,9 +701,3 @@
   footer strong{color:var(--cream); font-family:'Fredoka', sans-serif;}
   footer a{color:rgba(251,243,231,0.85); text-decoration:none; border-bottom:1px solid rgba(242,201,160,0.35);}
   footer a:hover, footer a:focus-visible{color:var(--cream);}
-
-  @media (prefers-reduced-motion: reduce){
-    *{animation:none !important; transition:none !important;}
-    .script-line, .pill-wrap, .right-now, .logo-img{opacity:1 !important; transform:none !important;}
-    body.contributions .contact-cards li{opacity:1 !important; transform:none !important;}
-  }
